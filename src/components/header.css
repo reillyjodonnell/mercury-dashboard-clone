@@ -1,0 +1,25 @@
+.styles__demoBanner_kSiKw {
+  align-items: center;
+  background-color: var(--ds-background-inverted);
+  color: var(--ds-text-on-inverted);
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-between;
+  max-height: calc(var(--demo-banner-height) + 50px);
+  min-height: var(--demo-banner-height);
+  overflow: hidden;
+  padding-left: 44px;
+  padding-right: 48px;
+  transition: max-height 0.3slinear, opacity 0.3slinear, visibility 0.3slinear,
+    min-height 0.3slinear;
+  visibility: visible;
+  width: 100%;
+  z-index: var(--banner-z-index);
+}
+
+.styles__body-default_BZuS2 {
+  font-family: 'Arcadia Text', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+}
