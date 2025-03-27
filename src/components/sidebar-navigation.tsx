@@ -1,11 +1,5 @@
-'use client';
-import React, { ForwardRefExoticComponent, RefAttributes } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import React from 'react';
 import {
-  Home,
-  CheckSquare,
   ListOrdered,
   CreditCard,
   TrendingUp,
@@ -14,62 +8,14 @@ import {
   FileText,
   RefreshCcw,
   BookOpen,
-  LucideProps,
   Mailbox,
   House,
 } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-
-// Navigation Item component
-interface NavItemProps {
-  href: string;
-  Icon: ForwardRefExoticComponent<
-    Omit<LucideProps, 'ref'> & RefAttributes<SVGSVGElement>
-  >;
-  label: string;
-  isActive?: boolean;
-  badge?: number;
-  dot?: boolean;
-}
-
-const NavItem = ({
-  href,
-  Icon,
-  label,
-  isActive = false,
-  badge,
-  dot,
-}: NavItemProps) => {
-  return (
-    <Link
-      href={href}
-      className={cn(
-        'mercury-nav-item',
-        isActive && 'active ',
-        !isActive && 'opacity-85',
-        'hover:bg-mercury-active-nav hover:opacity-100 transition-all'
-      )}
-    >
-      <Icon
-        size={14}
-        className={isActive ? 'text-[#5266eb]' : ''}
-        strokeWidth={1.75}
-      />
-      <span className="flex-grow text-sm">{label}</span>
-      {badge && (
-        <span className="flex items-center justify-center w-5 h-5 text-xs bg-[#E9E8F0] rounded-full">
-          {badge}
-        </span>
-      )}
-      {dot && <span className="w-2 h-2 bg-[#6a6dd8] rounded-full mr-1"></span>}
-    </Link>
-  );
-};
+import NavItem from './nav-item';
 
 export function SidebarNavigation() {
-  const activePath = usePathname();
   return (
-    <nav className="mercury-sidebar flex flex-col h-full">
+    <nav className="mercury-sidebar flex flex-col h-full sticky top-14 left-0 z-50 min-h-100vh max-w-[215px] ">
       <div className="px-4 py-5 flex items-center border-b border-mercury-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-[#222335] flex items-center justify-center">
@@ -110,79 +56,27 @@ export function SidebarNavigation() {
       </div>
 
       <div className="flex-grow p-3">
-        <NavItem
-          href="/dashboard"
-          Icon={House}
-          label="Home"
-          isActive={activePath === '/dashboard'}
-        />
-        <NavItem
-          href="/tasks"
-          Icon={Mailbox}
-          label="Tasks"
-          isActive={activePath === '/tasks'}
-          badge={5}
-        />
-        <NavItem
-          href="/transactions"
-          Icon={ListOrdered}
-          label="Transactions"
-          isActive={activePath === '/transactions'}
-        />
-        <NavItem
-          href="/payments"
-          Icon={Receipt}
-          label="Payments"
-          isActive={activePath === '/payments'}
-        />
-        <NavItem
-          href="/cards"
-          Icon={CreditCard}
-          label="Cards"
-          isActive={activePath === '/cards'}
-        />
-        <NavItem
-          href="/capital"
-          Icon={TrendingUp}
-          label="Capital"
-          isActive={activePath === '/capital'}
-        />
-        <NavItem
-          href="/accounts"
-          Icon={Building2}
-          label="Accounts"
-          isActive={activePath === '/accounts'}
-        />
+        <NavItem href="/dashboard" label="Home" />
+        <NavItem href="/tasks" label="Tasks" badge={5} />
+        <NavItem href="/transactions" label="Transactions" disabled={true} />
+        <NavItem href="/payments" label="Payments" disabled={true} />
+        <NavItem href="/cards" label="Cards" disabled={true} />
+        <NavItem href="/capital" label="Capital" disabled={true} />
+        <NavItem href="/accounts" label="Accounts" disabled={true} />
 
         <div className="px-4 py-2 mt-4 text-xs font-medium text-mercury-text-secondary">
           Workflows
         </div>
 
-        <NavItem
-          href="/bill-pay"
-          Icon={Receipt}
-          label="Bill Pay"
-          isActive={activePath === '/bill-pay'}
-        />
-        <NavItem
-          href="/invoicing"
-          Icon={FileText}
-          label="Invoicing"
-          isActive={activePath === '/invoicing'}
-        />
+        <NavItem href="/bill-pay" label="Bill Pay" disabled={true} />
+        <NavItem href="/invoicing" label="Invoicing" disabled={true} />
         <NavItem
           href="/expenses"
-          Icon={RefreshCcw}
           label="Reimbursements"
-          isActive={activePath === '/expenses'}
+          disabled={true}
           dot={true}
         />
-        <NavItem
-          href="/accounting"
-          Icon={BookOpen}
-          label="Accounting"
-          isActive={activePath === '/accounting'}
-        />
+        <NavItem href="/accounting" label="Accounting" disabled={true} />
       </div>
     </nav>
   );

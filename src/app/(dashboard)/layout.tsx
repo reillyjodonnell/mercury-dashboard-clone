@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <>
-      <div className="flex items-center justify-between sticky">
+      <div className="flex items-center justify-between sticky top-0 z-50">
         <div className="items-center bg-[#1e1e2a] text-white flex shrink-0 justify-between h-14 min-h-14 overflow-hidden pl-[44px] pr-[48px] w-full">
           <div className="text-[15px] font-light leading-[24px] w-full">
             <div className="flex items-center">
@@ -114,14 +114,15 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-
-      <div className="min-h-screen flex h-full">
+      <div className="flex">
         <SidebarNavigation />
-        <div className="flex-1 flex flex-col bg-white">
-          <Header />
-          <main className="flex-1 p-4  justify-center items-center">
-            {children}
-          </main>
+        <div className="flex h-full overflow-y-scroll mx-auto">
+          <div className="flex-1 flex flex-col bg-white">
+            <Header />
+            <main className="flex-1 p-4  justify-center items-center">
+              {children}
+            </main>
+          </div>
         </div>
       </div>
     </>

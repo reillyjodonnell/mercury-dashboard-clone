@@ -1,4 +1,11 @@
-import { Send } from 'lucide-react';
+import {
+  ArrowLeftFromLine,
+  ArrowRightLeft,
+  Mail,
+  Plus,
+  Receipt,
+  Send,
+} from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 
@@ -6,11 +13,11 @@ export function TopBarActions() {
   return (
     <div className="flex space-x-4">
       <TopBarButton text="Send" Icon={Send} isActive={true} />
-      <TopBarButton text="Request" Icon={Send} />
-      <TopBarButton text="Transfer" Icon={Send} />
-      <TopBarButton text="Deposit" Icon={Send} />
-      <TopBarButton text="Pay Bill" Icon={Send} />
-      <TopBarButton text="Create Invoice" Icon={Send} />
+      <TopBarButton text="Request" Icon={ArrowLeftFromLine} />
+      <TopBarButton text="Transfer" Icon={ArrowRightLeft} />
+      <TopBarButton text="Deposit" Icon={Plus} />
+      <TopBarButton text="Pay Bill" Icon={Mail} />
+      <TopBarButton text="Create Invoice" Icon={Receipt} />
     </div>
   );
 }

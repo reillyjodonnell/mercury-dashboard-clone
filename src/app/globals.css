@@ -87,19 +87,15 @@
   }
 }
 
-html,
-body {
-  height: 100%;
-}
-
 /* Mercury custom styles */
 @layer components {
   .mercury-sidebar {
     @apply w-[215px] bg-background border-r border-mercury-border;
+    min-height: calc(100vh - 56px);
   }
 
   .mercury-nav-item {
-    @apply flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-md;
+    @apply flex items-center gap-3 px-4 py-2 text-sm font-medium rounded-md my-1;
   }
 
   .mercury-nav-item.active {

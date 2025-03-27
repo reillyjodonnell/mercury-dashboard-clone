@@ -2,7 +2,7 @@ import { User, Send, RefreshCw, BarChart } from 'lucide-react';
 
 export default function TasksComponent() {
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-[968px] mx-auto">
       <h1 className="text-2xl font-medium mb-4">Tasks</h1>
 
       <div className="flex space-x-2 mb-6">
