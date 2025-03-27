@@ -1,25 +1,20 @@
 'use client';
-import {
-  ArrowDown,
-  ArrowRight,
-  ArrowUp,
-  CreditCard,
-  HelpCircle,
-  Plus,
-} from 'lucide-react';
+import { ArrowRight, CreditCard, HelpCircle, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
 
+import { ArrowDown, ArrowUp } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import {
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart';
 
-import { type ChartConfig } from '@/components/ui/chart';
+import useSWR from 'swr';
 
 const chartConfig = {
   desktop: {
@@ -32,28 +27,30 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-  { month: 'July', desktop: 160 },
-  { month: 'August', desktop: 208 },
-  { month: 'September', desktop: 165 },
-  { month: 'October', desktop: 222 },
-  { month: 'November', desktop: 224 },
-  { month: 'December', desktop: 184 },
-];
+const fetcher = (url: string) =>
+  fetch(url).then((res) => {
+    return res.json();
+  });
 
 export default function FinancialDashboard() {
+  const { data } = useSWR(
+    'https://mercury-api-production-d371.up.railway.app/data',
+    fetcher,
+    {
+      suspense: true,
+    }
+  );
+
+  const splitBalance = data?.balance?.balance?.split('.');
+
+  const splitCreditCardBalance = data?.creditCard?.balance.split('.');
+
   return (
     <div className="grid gap-12">
       <div className="grid gap-6 md:grid-cols-2 items-stretch">
         {/* Balance Card */}
         <Card className="h-full">
-          <CardContent className="p-6 h-full ">
+          <CardContent className="p-6 h-full flex flex-col ">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <h3 className=" font-medium text-muted-foreground">
@@ -126,7 +123,8 @@ export default function FinancialDashboard() {
             </div>
             <div className="mb-4">
               <h2 className="text-3xl">
-                $5,216,471<span className="text-2xl">.18</span>
+                {splitBalance[0]}
+                <span className="text-2xl">.{splitBalance[1]}</span>
               </h2>
               <div className="flex items-center gap-2 mt-2">
                 <span className="text-sm text-muted-foreground">
@@ -151,17 +149,17 @@ export default function FinancialDashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-1 text-emerald-600">
                 <ArrowUp className="h-4 w-4" />
-                <span className="font-medium">$1.7M</span>
+                <span className="font-medium">{data.balance.up}</span>
               </div>
               <div className="flex items-center gap-1 text-rose-600">
                 <ArrowDown className="h-4 w-4" />
-                <span className="font-medium">-$418K</span>
+                <span className="font-medium">{data.balance.down}</span>
               </div>
             </div>
             <ChartContainer config={chartConfig} className="h-[152px] w-full">
               <AreaChart
                 accessibilityLayer
-                data={chartData}
+                data={data.balance.chartData}
                 margin={{
                   left: 12,
                   right: 12,
@@ -234,11 +232,13 @@ export default function FinancialDashboard() {
               </div>
             </div>
             <div className="">
-              <AccountItem title="Credit Card" amount="$12,505.87" />
-              <AccountItem title="Treasury" amount="$200,000.00" />
-              <AccountItem title="Ops / Payroll" amount="$2,023,267.12" />
-              <AccountItem title="AP" amount="$226,767.82" />
-              <AccountItem title="AR" amount="$0.00" />
+              {data.accounts.map((account) => (
+                <AccountItem
+                  title={account.name}
+                  amount={account.balance}
+                  key={account.id}
+                />
+              ))}
               <div className="flex items-center gap-2 mt-6 text-sm text-muted-foreground">
                 <div className="flex items-center justify-center h-6 w-6 rounded-full bg-gray-100 text-xs">
                   +2
@@ -285,7 +285,8 @@ export default function FinancialDashboard() {
             </div>
             <div className="mb-6">
               <h2 className="text-3xl font-bold">
-                $12,505<span className="text-xl">.87</span>
+                {splitCreditCardBalance[0]}
+                <span className="text-xl">.{splitCreditCardBalance[1]}</span>
               </h2>
             </div>
             <div className="w-full h-2 bg-gray-100 rounded-full mb-4">
@@ -304,7 +305,9 @@ export default function FinancialDashboard() {
                 <span>Pending</span>
               </div>
               <div>
-                <span className="text-muted-foreground">$21,249 available</span>
+                <span className="text-muted-foreground">
+                  {data.creditCard.available} available
+                </span>
               </div>
             </div>
             <div className="flex items-center justify-between">
@@ -326,7 +329,9 @@ export default function FinancialDashboard() {
                 </svg>
                 <span className="text-sm text-muted-foreground">Autopay</span>
               </div>
-              <span className="text-sm font-medium">Mar 31</span>
+              <span className="text-sm font-medium">
+                {data.creditCard.dueDate}
+              </span>
               <Button className="rounded-full px-6">Pay</Button>
             </div>
           </CardContent>

@@ -13,11 +13,11 @@ export function TopBarActions() {
   return (
     <div className="flex space-x-4">
       <TopBarButton text="Send" Icon={Send} isActive={true} />
-      <TopBarButton text="Request" Icon={ArrowLeftFromLine} />
-      <TopBarButton text="Transfer" Icon={ArrowRightLeft} />
-      <TopBarButton text="Deposit" Icon={Plus} />
-      <TopBarButton text="Pay Bill" Icon={Mail} />
-      <TopBarButton text="Create Invoice" Icon={Receipt} />
+      <TopBarButton text="Request" Icon={ArrowLeftFromLine} isActive={false} />
+      <TopBarButton text="Transfer" Icon={ArrowRightLeft} isActive={false} />
+      <TopBarButton text="Deposit" Icon={Plus} isActive={false} />
+      <TopBarButton text="Pay Bill" Icon={Mail} isActive={false} />
+      <TopBarButton text="Create Invoice" Icon={Receipt} isActive={false} />
     </div>
   );
 }
@@ -28,7 +28,7 @@ function TopBarButton({
   isActive,
 }: {
   text: string;
-  Icon: any;
+  Icon: JSX.ElementType;
   isActive: boolean;
 }) {
   return (

@@ -2,6 +2,8 @@ import { SidebarNavigation } from '@/components/sidebar-navigation';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 
+export const dynamic = 'force-static'; // Ensures static rendering
+
 export default function DashboardLayout({
   children,
 }: {
@@ -114,9 +116,9 @@ export default function DashboardLayout({
           </div>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex h-full">
         <SidebarNavigation />
-        <div className="flex h-full overflow-y-scroll mx-auto">
+        <div className="flex h-full w-full overflow-y-scroll mx-auto">
           <div className="flex-1 flex flex-col bg-white">
             <Header />
             <main className="flex-1 p-4  justify-center items-center">

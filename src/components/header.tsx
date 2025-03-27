@@ -7,9 +7,9 @@ import Image from 'next/image';
 export function Header() {
   return (
     <header className="bg-white  px-4 py-3 ">
-      <div className="flex items-center justify-center max-w-[968px] mx-auto w-full">
+      <div className="flex items-center justify-center max-w-[968px] mx-auto w-full gap-8">
         <div className="flex items-center w-full">
-          <div className="relative lg:w-[520px] w-full">
+          <div className="relative  w-full">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-mercury-text-secondary h-4 w-4" />
             <Input
               type="text"
